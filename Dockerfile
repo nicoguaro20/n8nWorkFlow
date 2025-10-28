@@ -1,5 +1,10 @@
-FROM n8nio/n8n
-ENV N8N_BASIC_AUTH_ACTIVE=true
-ENV N8N_BASIC_AUTH_USER=admin
-ENV N8N_BASIC_AUTH_PASSWORD=tu_clave_segura
-ENV WEBHOOK_TUNNEL_URL=https://tu-app.up.railway.app
+# Usa la imagen oficial
+FROM n8nio/n8n:latest
+
+# Copiamos workflows al contenedor
+COPY workflows /workflows
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
